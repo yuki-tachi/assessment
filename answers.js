@@ -14,7 +14,6 @@ function getTweetButtonElement(result) {
     anchor.setAttribute('class', 'twitter-hashtag-button');
     anchor.setAttribute('data-text', result);
     anchor.innerText = 'Tweet #あなたのいいところ';
-
     return anchor;
 }
 
@@ -22,14 +21,13 @@ userNameInput.addEventListener(
     'keydown',
     (event) => {
         console.log(event.target.value.length);
-      if(event.code === 'Enter' && event.target.value.length > 0) {
-        // TODO Enter が押されたときに実行する処理
-        console.log("enter");
-        assessmentButton.dispatchEvent(new Event('click'));
-      }
+        if (event.code === 'Enter' && event.target.value.length > 0) {
+            // TODO Enter が押されたときに実行する処理
+            console.log("enter");
+            assessmentButton.dispatchEvent(new Event('click'));
+        }
     }
-  )
-
+)
 
 assessmentButton.addEventListener('click', () => {
     console.log('ボタンが押されました');
@@ -44,20 +42,23 @@ assessmentButton.addEventListener('click', () => {
     resultDivision.appendChild(header);
 
     const paragraph = document.createElement('p');
-    const result = assessment(userName);
-    paragraph.innerText = result;
+    paragraph.className = 'typing';
     resultDivision.appendChild(paragraph);
+    const result = assessment(userName);
+
+    result.split('').forEach((char, i) => {
+        setTimeout(() => {
+            paragraph.innerText += char;
+        }, 100 * i);
+    });
 
     tweetDivision.innerText = "";
     tweetDivision.appendChild(getTweetButtonElement(result));
 
-     // **Twitterウィジェットをリロード**
-     if ( window?.twttr?.widgets) {
-        window.twttr.widgets.load(); 
+    // **Twitterウィジェットをリロード**
+    if (window?.twttr?.widgets) {
+        window.twttr.widgets.load();
     }
-    // const script = document.createElement('script');
-    // script.setAttribute('src', 'https://platform.twitter.com/widgets.js');
-    // tweetDivision.appendChild(script);
 });
 
 
@@ -79,5 +80,3 @@ const answers = [
     `###userName###のいいところはその全てです。ありのままの###userName###自身がいいところなのです。`,
     `###userName###のいいところは自制心です。やばいと思ったときにしっかりと衝動を抑えられる###userName###が皆から評価されています。`,
 ];
-
-// export default answers;
