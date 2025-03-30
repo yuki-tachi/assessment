@@ -4,14 +4,31 @@ body {
     width: 500px;
     margin-right: auto;
     margin-left: auto;
-  }
+}
 
-  button {
+button {
     padding: 5px 20px;
     background-color: #337ab7;
     border-style: none;
-  }
+}
 
-  input {
+input {
     height: 20px;
-  }
+}
+
+.typing::after {
+    content: "|";
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
